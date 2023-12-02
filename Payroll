@@ -1,0 +1,118 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" type="text/css" href="PayRoll.css"> 
+  <title>Payroll Management System</title>
+</head>
+<body>
+  <header>
+    <div class="main">
+        <div class="logo">  
+        </div>
+        <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="UnitConversion.html">UnitConversion</a></li>
+            <li><a href="TaxIncome.html">TaxIncome</a></li>
+            <li><a href="nth factorial, sum, average.html">Factorial</a></li>
+            <li class="active"><a href="Payroll.html">Payroll</a></li>
+            <li><a href="Personal HTML.html">AboutMe</a></li>
+            <li><a href="ContactMe.html">ContactMe</a></li>
+        </ul>
+    </div>   
+</header>
+  <h1>Payroll Management System</h1>
+
+  <form id="payrollForm">
+    <label for="name">Employee Name:</label>
+    <input type="text" id="name" name="name" required>
+
+    <label for="daysWorked">Days Worked:</label>
+    <input type="number" id="daysWorked" name="daysWorked" required>
+
+    <label for="dailyRate">Daily Rate:</label>
+    <input type="number" id="dailyRate" name="dailyRate" required>
+
+    <label for="deductionAmount">Deduction Amount:</label>
+    <input type="number" id="deductionAmount" name="deductionAmount" required>
+
+    <button type="button" onclick="addEmployee()">Add Employee</button>
+  </form>
+
+  <table id="payrollTable">
+    <tr>
+      <th>No.</th>
+      <th>Employee Name</th>
+      <th>Days Worked</th>
+      <th>Daily Rate</th>
+      <th>Gross Pay</th>
+      <th>Deduction Amount</th>
+      <th>Net Pay</th>
+      <th>Action</th>
+    </tr>
+  </table>
+
+  <script>
+    let payrollList = [];
+
+    function calculatePay(daysWorked, dailyRate, deductionAmount) {
+      const grossPay = daysWorked * dailyRate;
+      const netPay = grossPay - deductionAmount;
+      return { grossPay, netPay };
+    }
+
+    function displayPayrollTable() {
+      const payrollTable = document.getElementById('payrollTable');
+      payrollTable.innerHTML = `
+        <tr>
+          <th>No.</th>
+          <th>Employee Name</th>
+          <th>Days Worked</th>
+          <th>Daily Rate</th>
+          <th>Gross Pay</th>
+          <th>Deduction Amount</th>
+          <th>Net Pay</th>
+          <th>Action</th>
+        </tr>
+      `;
+
+      payrollList.forEach((employee, index) => {
+        const { grossPay, netPay } = calculatePay(employee.daysWorked, employee.dailyRate, employee.deductionAmount);
+        const row = payrollTable.insertRow();
+        row.innerHTML = `
+          <td>${index + 1}</td>
+          <td>${employee.name}</td>
+          <td>${employee.daysWorked}</td>
+          <td>${employee.dailyRate}</td>
+          <td>${grossPay}</td>
+          <td>${employee.deductionAmount}</td>
+          <td>${netPay}</td>
+          <td><button class="delete-button" onclick="deleteEmployee(${index})">Delete</button></td>
+        `;
+      });
+    }
+
+    function addEmployee() {
+      const form = document.getElementById('payrollForm');
+      const name = form.elements['name'].value;
+      const daysWorked = parseInt(form.elements['daysWorked'].value);
+      const dailyRate = parseInt(form.elements['dailyRate'].value);
+      const deductionAmount = parseInt(form.elements['deductionAmount'].value);
+
+      payrollList.push({ name, daysWorked, dailyRate, deductionAmount });
+      displayPayrollTable();
+
+      // Clear the form fields
+      form.reset();
+    }
+
+    function deleteEmployee(index) {
+      payrollList.splice(index, 1);
+      displayPayrollTable();
+    }
+  </script>
+
+</body>
+</html>
