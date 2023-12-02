@@ -1,162 +1,75 @@
 
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css" />
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Syne"/>
-    <title>Links website</title>
-    <style>
-      body {
-        background-image: url("./orange.jpg");
-        background-repeat: no-repeat;
-        background-size: cover;
-        font-family: "Syne", sans-serif;
-        align-items: center;
-      }
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Unit Converter</title>
+    <link rel="stylesheet" type="text/css" href="UnitConversion.css">
+</head>
+<body>
+    <header>
+        <div class="main">
+            <div class="logo">  
+            </div>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li class="active"><a href="UnitConversion.html">UnitConversion</a></li>
+                <li><a href="TaxIncome.html">TaxIncome</a></li>
+                <li><a href="nth factorial, sum, average.html">Factorial</a></li>
+                <li><a href="Payroll.html">Payroll</a></li>
+                <li><a href="Personal HTML.html">AboutMe</a></li>
+                <li><a href="ContactMe.html">ContactMe</a></li>
+            </ul>
+        </div>  
+    </header>
 
-      .container {
-      width: 200%;
-      padding-right: 15px;
-      padding-left: 15px;
-      margin-right: auto;
-      margin-left: auto;
-      align-items: center;
-    }
+    <div class="conversion-box">
+        <h2>Unit Converter</h2>
 
+        <label for="inputValue">Enter Value:</label>
+        <input type="number" id="inputValue">
 
-      .links-container, .conversion-container, .calculator-container, .factorial-container, .payroll-container, .personal-container {
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      gap: 50px;
-    }
-      .w3-button, .calculate-button, .conversion-buttons, , {
-      width: 350px;
-      margin-bottom: 10px;
-      align-items: center;
-    }
-      label strong {
-      font-weight: bold;
-      
-    }
+        <label for="conversionType">Select Conversion Type:</label>
+        <select id="conversionType">
+            <option value="fahrenheitToCelsius">Fahrenheit to Celsius</option>
+            <option value="celsiusToFahrenheit">Celsius to Fahrenheit</option>
+            <option value="metersToFeet">Meters to Feet</option>
+            <option value="feetToMeters">Feet to Meters</option>
+        </select>
 
-      .links-container, .result {
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        gap: 40px;
-      }
+        <button onclick="convert()">Convert</button>
 
-      .link {
-        min-width: 40% !important;
-      }
+        <p id="result"></p>
+    </div>
 
-      @media (min-width: 1200px) {
-        .container {
-          max-width: 1140px;
+    <script>
+        function convert() {
+            const inputValue = parseFloat(document.getElementById("inputValue").value);
+            const conversionType = document.getElementById("conversionType").value;
+            let result;
+
+            switch (conversionType) {
+                case "fahrenheitToCelsius":
+                    result = (inputValue - 32) * (5 / 9);
+                    break;
+                case "celsiusToFahrenheit":
+                    result = (inputValue * (9 / 5)) + 32;
+                    break;
+                case "metersToFeet":
+                    result = inputValue * 3.28084;
+                    break;
+                case "feetToMeters":
+                    result = inputValue / 3.28084;
+                    break;
+                default:
+                    console.log("Invalid conversion type");
+                    return;
+            }
+
+            document.getElementById("result").innerHTML = `Result: ${result.toFixed(2)}`;
         }
-      }
-      @media (min-width: 992px) {
-        .container {
-          max-width: 960px;
-        }
-      }
-      @media (min-width: 768px) {
-        .container {
-          max-width: 720px;
-        }
-
-        .link {
-          width: 100%;
-        }
-      }
-      @media (min-width: 576px) {
-        .container {
-          max-width: 540px;
-        }
-      }
-
-      .w3-yellow,
-      .w3-hover-purple:hover,
-      .w3-text-black, .result {
-      }
-      employeeInfo.style.color = 'blue';
-    </style>
-  </head>
-
-  <body class="w3-white">
-    <!-- Content container -->
-    <div class="container">
-
-
-        <!-- Content. Add bio. -->
-        <div class="w3-text-orange" style="border:thick solid orange" text-align="middle;">
-          <p class="w3-xxxlarge w3-bold w3-center "><strong>UNIT CONVERSION</strong></p>
-        </div> 
-
-        <!-- Unit Converter Section -->
-        <div class="converter-container">
-            <h1></h1>
-      
-     <script>
-              function showConversion() {
-      document.getElementById("links-container").style.display = "none";
-      document.getElementById("conversion-container").style.display = "flex";
-    }
-     function goBackFromConversion() {
-      document.getElementById("conversion-container").style.display = "none";
-      document.getElementById("links-container").style.display = "flex";
-    }
-                function convertTemperature() {
-                    var fahrenheit = parseFloat(prompt("Enter temperature in Fahrenheit:"));
-                    var celsius = (fahrenheit - 32) * (5/9);
-                    alert(fahrenheit + " Fahrenheit is equal to " + celsius.toFixed(2) + " Celsius");
-                }
-
-                function convertTemperatureReverse() {
-                    var celsius = parseFloat(prompt("Enter temperature in Celsius:"));
-                    var fahrenheit = (celsius * (9/5)) + 32;
-                    alert(celsius + " Celsius is equal to " + fahrenheit.toFixed(2) + " Fahrenheit");
-                }
-
-                function convertLength() {
-                    var meters = parseFloat(prompt("Enter length in Meters:"));
-                    var feet = meters * 3.28084;
-                    alert(meters + " Meters is equal to " + feet.toFixed(2) + " Feet");
-                }
-
-                function convertLengthReverse() {
-                    var feet = parseFloat(prompt("Enter length in Feet:"));
-                    var meters = feet / 3.28084;
-                    alert(feet + " Feet is equal to " + meters.toFixed(2) + " Meters");
-                }
-
-   
-            </script>
-      </head>
+    </script>
     
-
-          <div id="links-container" class="links-container">
-        <a <button class="w3-button w3-hover-yellow w3-xlarge w3-circle-xlarge w3-orange link" onclick="showConversion()"> Unit Conversion</a>
-        <br>
-
-      </div>
-
-
-      <div id="conversion-container" class="conversion-container" style="display: none;">
-        <p>SELECT A CONVERSION TYPE:</p>
-        <button class="w3-button w3-hover-yellow w3-xlarge w3-orange link" onclick="convertTemperature()">Celsius to Fahrenheit</button> </a>
-        <button class="w3-button w3-hover-yellow w3-xlarge  w3-orange link" onclick="convertTemperatureReverse()">Fahrenheit to Celsius</button>
-        <button class="w3-button w3-hover-yellow w3-xlarge  w3-orange link" onclick="convertLength()">Meters to Feet</button>
-        <button class="w3-button w3-hover-yellow w3-xlarge  w3-orange link" onclick="convertLengthReverse()">Feet to Meters</button>
-        <br>
-
-        <a href="./index.html" class="w3-button w3-hover-yellow w3-medium w3-#f7c477 link" style="border:thick solid orange" onclick="goBackFromConversion()">BACK TO MENU</a>
-      </div>
-  </footer>
 </body>
 </html>
